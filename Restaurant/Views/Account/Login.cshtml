@@ -1,0 +1,61 @@
+﻿<html lang="en">
+<head>
+    <title>Cabin Coffee Login Site</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/Content/css/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/Content/css/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/Content/css/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/Content/css/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/Content/css/login-util.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/login-main.css">
+
+    <link rel="icon"
+          type="image/png"
+          href="/Content/Images/Demon.jpg">
+    <!--===============================================================================================-->
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                    Log In Site
+                </span>
+                <form class="login100-form validate-form p-b-33 p-t-5" action="/Account/Login" method="POST">
+                    <div class="wrap-input100 validate-input" data-validate="Username Missing">
+                        <input class="input100" type="text" name="userName" id="userName" placeholder="Username">
+                        <div class="text-danger" style="margin-left: 80px" id="userNameInvalid"></div>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Password MMissing">
+                        <input class="input100" type="password" name="passWord" id="passWord" placeholder="Password">
+                        <div class="text-danger" style="margin-left: 80px" id="passwordInvalid"></div>
+                    </div>
+                    <div class="container-login100-form-btn m-t-32">
+                        <button type="submit" class="login100-form-btn">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/css/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/css/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/css/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/js/login.js"></script>
+</body>
+</html>
+<script src="https://kit.fontawesome.com/72290dc8e4.js" crossorigin="anonymous"></script>

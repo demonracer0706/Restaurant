@@ -1,0 +1,63 @@
+﻿@model Restaurant.Models.CounterModel
+<html>
+<head>
+    <link rel="icon"
+          type="image/png"
+          href="~/Content/Images/Demon.jpg">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        #table-1 table, td, th {
+            border: 1px solid black;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center">
+        <h1>Cabin Coffee</h1>
+        <h4>116A Đường 3/2, P. Xuân Khánh, Q. Ninh Kiều, Cần Thơ</h4>
+        <h4>SĐT: 02926.530.199</h4>
+        <h2>HÓA ĐƠN BÀN @Model.TableId</h2>
+        <h3>Mã hóa đơn: @Model.Invoice.ID_Invoice</h3>
+        <h3>Giờ vào: @Model.Invoice.Date.ToString("dd/MM/yyyy HH:mm")</h3>
+    </div>
+    <table id="table-1">
+        <tr>
+            <th>Tên</th>
+            <th>SL</th>
+            <th>Giá</th>
+            <th>Tổng</th>
+        </tr>
+        <tbody>
+            @{
+                if (Model.OrderList != null && Model.OrderList.Count > 0)
+                {
+                    foreach (var item in Model.OrderList)
+                    {
+                        var unitPrice = @item.TONGTIEN / @item.SOLUONG;
+                        <tr>
+                            <td>@item.TEN_THUCPHAM</td>
+                            <td>@item.SOLUONG</td>
+                            <td>@unitPrice</td>
+                            <td>@item.TONGTIEN</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3" style="font-size: 18px; font-weight: bold;">Tổng tiền:</td>
+                        <td style="font-size: 18px; font-weight: bold;">@Model.Invoice.Payable</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div style="text-align: center; margin-top: 10px">
+        <p>Quý khách vui lòng kiểm tra lại hoá đơn trước khi thanh toán</p>
+        <p>Cabin Coffee xin cảm ơn quý khách hàng!</p>
+        <p>Hẹn gặp lại quý khách hàng lần sau!</p>
+    </div>
+</body>
+</html>

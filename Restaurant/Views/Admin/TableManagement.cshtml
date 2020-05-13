@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "TableManagement";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model Restaurant.Models.AdminModel
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-6">
+                    <h6 class="m-0 font-weight-bold text-primary">Table Management</h6>
+                </div>
+                <div class="col-6 justify-content-end d-flex">
+                    <button class="btn btn-primary" id="btnAdd">
+                        <i class="fas fa-plus-circle"></i>
+                        Add New Table
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Number</th>
+                            <th>Table Name</th>
+                            <th>Zone</th>
+                            <th>Status</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model.TableList != null && Model.TableList.Count > 0)
+                            {
+
+                                <input hidden id="tableSize" value="@Model.TableList.Count" />
+                                for (int i = 0; i < Model.TableList.Count; i++)
+                                {
+                                    var status = "";
+                                    var tableId = "tableId" + i;
+                                    var tableName = "tableName" + i;
+                                    var zoneId = "zoneId" + i;
+                                    var updateId = "updateId" + i;
+                                    var deleteId = "deleteId" + i;
+                                    if (Model.TableList[i].Status)
+                                    {
+                                        status = "In Use";
+                                    }
+                                    else
+                                    {
+                                        status = "Empty";
+                                    }
+                                    <tr>
+                                        <td class="text-center">
+                                            @Model.TableList[i].Number
+                                            <input hidden id="@tableId" value="@Model.TableList[i].Number" />
+                                        </td>
+                                        <td>
+                                            @Model.TableList[i].TableName
+                                            <input hidden id="@tableName" value="@Model.TableList[i].TableName" />
+                                        </td>
+                                        <td>
+                                            @Model.TableList[i].ID_Zone
+                                            <input hidden id="@zoneId" value="@Model.TableList[i].ID_Zone" />
+                                        </td>
+                                        <td>
+                                            @status
+                                        </td>
+                                        <td class="d-inline-flex justify-content-center">
+                                            <a href="#" id="@updateId" class="mt-2">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                            <a href="#"
+                                               id="@deleteId"
+                                               class="ml-3 mt-2" style="color: red">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a class="btn btn-success ml-3"
+                                                href="/Admin/ChangeStatus?tableId=@Model.TableList[i].Number">
+                                                Change Status
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CreateOrUpdate modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="tableModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="create-or-update-title"></h5>
+                <button type="button" class="close btnCancel" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmCreateOrUpdate" novalidate>
+                <div class="modal-body" id="modalContent">
+                    <input type="hidden"
+                           id="tableId">
+                    <div class="form-group">
+                        <label for="tableName">Table Name</label>
+                        <input type="text"
+                               maxlength="10"
+                               class="form-control"
+                               id="tableName"
+                               placeholder="Enter Table Name" required>
+                        <span class="text-danger" id="tableNameInvalid"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="select-zone-item">Zone</label>
+                        <select class="form-control"
+                                id="select-zone-item" required>
+                            @if (Model.ZoneList != null && Model.ZoneList.Count > 0)
+                            {
+                                foreach (var item in Model.ZoneList)
+                                {
+                                    <option value="@item.ID_Zone"> @item.ZoneName </option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnOk">OK</button>
+                    <a href="#" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Confirm modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm delete Table</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="tableDeleteId">
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnConfirmDelete">OK</button>
+                <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Page level plugins -->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<!-- Page level custom scripts -->
+<script type="text/javascript" src="~/Content/js/datatables-demo.js"></script>
+<script type="text/javascript" src="~/Content/js/Admin/tableManagement.js"></script>

@@ -1,0 +1,245 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+}
+
+@model Restaurant.Models.HomeModel
+<!-- Navigation
+    ==========================================-->
+<nav id="menu" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="navbar-brand page-scroll" href="#page-top">Cabin Coffee</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about" class="page-scroll">Story</a></li>
+                <li><a href="#restaurant-menu" class="page-scroll">Menu</a></li>
+                <li><a href="#order" class="page-scroll">Book a Table</a></li>
+                <li class="singin">@Html.ActionLink("Sign In", "Login", "Account")</li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</nav>
+<!-- Header -->
+<header id="header">
+    <div class="intro">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1>Cabin Coffee</h1>
+                        <p>Coffee Shop</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- About Section -->
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 ">
+                <div class="about-img"><img src="~/Content/Images/aboutZ.jpg" class="img-responsive" alt=""></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="about-text">
+                    <h2>Story</h2>
+                    <hr>
+                    <p>Với nguồn cà phê sạch, kết hợp với công thức pha chế đậm chất riêng của quán. Cabin Coffee tự hào mang đến cho quý khách hương vị cà phê thơm nồng nàn, đậm đà và mê hoặc.</p>
+                    <p>Mỗi loại thức uống, mỗi món ăn đều được chế biến chỉnh chu theo từng công đoạn, đảm bảo sức khỏe và đem đến sự hài lòng của quý khách hàng.</p>
+                    <p>Với không gian rộng rãi và nhẹ nhàng, những bản nhạc du dương chắc chắn sẽ mang đến trải nghiệm tuyệt vời cho bạn.</p>
+                    <h3>Cabin Coffee - Nghệ thuật và Không gian</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Restaurant Menu Section -->
+<div id="restaurant-menu">
+    <div class="section-title text-center center">
+        <div class="overlay">
+            <h2>Menu</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="menu-section">
+                    <h2 class="menu-section-title">Drink</h2>
+                    <hr>
+                    @{
+                        if (Model.DrinkList != null && Model.DrinkList.Count > 0)
+                        {
+                            foreach (var item in Model.DrinkList)
+                            {
+                                <div class="menu-item" style="display: flex; align-items: flex-end;">
+                                    <img src="@item.Image"
+                                         style="width: 100px; height: 100px; box-shadow: none;">
+                                    <div style="width: 80%; margin-left: 10px">
+                                        <div class="menu-item-name"> @item.ProductName</div>
+                                        <div class="menu-item-price"> @item.Price</div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="menu-section">
+                    <h2 class="menu-section-title">Food</h2>
+                    <hr>
+                    @{
+                        if (Model.FoodList != null && Model.FoodList.Count > 0)
+                        {
+                            foreach (var item in Model.FoodList)
+                            {
+                                <div class="menu-item" style="display: flex; align-items: flex-end;">
+                                    <img src="@item.Image"
+                                         style="width: 100px; height: 100px;box-shadow: none;">
+                                    <div style="width: 80%; margin-left: 10px">
+                                        <div class="menu-item-name"> @item.ProductName</div>
+                                        <div class="menu-item-price"> @item.Price </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Order Section -->
+<div id="order" class="text-center">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>BOOK A TABLE</h2>
+            <hr>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            <form id="frmOrder" novalidate>
+                <div class="form-group">
+                    <label for="name" style="font-weight: bold; font-size: 16px">Full Name:</label>
+                    <input type="text"
+                           maxlength="40"
+                           id="name" class="form-control" placeholder="Your Full Name" required>
+                    <span class="text-danger" id="nameInvalid"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email" style="font-weight: bold; font-size: 16px">Email:</label>
+                    <input type="text"
+                           maxlength="100"
+                           id="email" class="form-control" placeholder="VD: example@gmail.com" required>
+                    <span class="text-danger" id="emailInvalid"></span>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="select-menu-item" style="font-weight: bold; font-size: 16px">Table:</label>
+                        <select class="form-control"
+                                asp-for="@Model.TableId"
+                                id="select-menu-item">
+                            @if (Model.TableList != null && Model.TableList.Count > 0)
+                            {
+                                foreach (var item in Model.TableList)
+                                {
+                                    <option value="@item.Number"> @item.TableName </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row" style="margin: 0; padding: 0">
+                            <label for="input-date" style="font-weight: bold; font-size: 16px">Time:</label>
+                        </div>
+                        <div class="row" style="margin: 0; padding: 0">
+                            <div class="input-group date mb-3" id="datetimepicker">
+                                <input type="text" class="form-control" id="input-date"
+                                       required
+                                       aria-describedby="calendarIcon" />
+                                <span class="input-group-addon" id="calendarIcon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <span class="text-danger" id="dateInvalid"></span>
+                        </div>
+                    </div>
+                </div>
+                <button id="btnOrder" type="submit" class="btn btn-custom btn-lg">BOOK MOW</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="container text-center">
+        <div class="col-md-4">
+            <h3>Address</h3>
+            <div class="contact-item">
+                <p>116A Đường 3/2, P. Xuân Khánh, Q. Ninh Kiều, Cần Thơ</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Open</h3>
+            <div class="contact-item">
+                <p>7:30 AM - 10:30 PM</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Contacts</h3>
+            <div class="contact-item">
+                <p>SĐT: 02926.530.199</p>
+                <p>Email: bieub1507054@student.ctu.edu.vn</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center copyrights">
+        <div class="social">
+            <ul>
+                <li><a href="#"><i class="fab fa-facebook" style="font-size: 20px"></i></a></li>
+                <li><a href="#"><i class="fab fa-google-plus-g" style="font-size: 20px"></i></a></li>
+            </ul>
+        </div>
+        <p>&copy; SINCE 2011 - Cabin Coffee</p>
+    </div>
+</div>
+<!-- Order modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="orderModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Content/js/jquery.1.11.1.js"></script>
+<script type="text/javascript" src="~/Content/js/bootstrap.js"></script>
+<script type="text/javascript" src="~/Content/js/SmoothScroll.js"></script>
+<script type="text/javascript" src="~/Content/js/nivo-lightbox.js"></script>
+<script type="text/javascript" src="~/Content/js/jquery.isotope.js"></script>
+
+@*Datetime picker plugin*@
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="~/Content/js/main.js"></script>

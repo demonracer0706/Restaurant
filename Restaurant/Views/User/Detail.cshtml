@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    long total = 0;
+}
+
+@model Restaurant.Models.UserModel
+@{
+    if (Model.OrderList != null && Model.OrderList.Count > 0)
+    {
+        <div class="container card mb-2">
+            <div class="row">
+                <div class="col-8" style="font-size:20px;font-weight:bold;">Table @Model.TableId</div>
+                <div class="col-4 p-1 align-items-end">
+                    <button class="btn btn-success mr-2" id="btn-add">Add Item</button>
+                </div>
+            </div>
+        </div>
+        <div class="container card" id="content">
+            @{
+                if (Model.OrderList != null && Model.OrderList.Count > 0)
+                {
+                    for (int i = 0; i < Model.OrderList.Count; i++)
+                    {
+                        total += Model.OrderList[i].TONGTIEN;
+                        <div class="row justify-content-center">
+                            <div class="col d-inline-flex align-items-center">
+                                <img src="@Model.OrderList[i].URL" style="width: 100px; height: 100px;" />
+                                <div class="d-flex justify-content-between w-50">
+                                    <span>@Model.OrderList[i].TEN_THUCPHAM</span>
+                                    <span><span>x</span>@Model.OrderList[i].SOLUONG</span>
+                                    <span>@(Model.OrderList[i].DONGIA * Model.OrderList[i].SOLUONG)</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="container card mt-2">
+            <div class="row">
+                <div class="col p-1 d-flex justify-content-end">
+                    <span style="font-size: 20px;color: #000000;font-weight:bold">Total Price:</span>
+                    <span style="font-size: 20px;color: #000000;">@total</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container card mb-2">
+            <div class="row">
+                <div class="col-8" style="font-size:20px;font-weight:bold;">Table @Model.TableId</div>
+                <div class="col-4 p-1 align-items-end">
+                    <button class="btn btn-success mr-2" id="btn-add">Add Item</button>
+                </div>
+            </div>
+        </div>
+        <span>
+            No Item
+        </span>
+    }
+}
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="AddItem" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="select-item">Item</label>
+                        <input name="tableId" type="hidden" value="@Model.TableId" />
+                        <select class="form-control"
+                                name="itemId" required>
+                            @if (Model.MenuList != null && Model.MenuList.Count > 0)
+                            {
+                                foreach (var item in Model.MenuList)
+                                {
+                                    <option value="@item.ID_Product"> @item.ProductName </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="text"
+                               maxlength="10"
+                               class="form-control"
+                               name="quantity"
+                               placeholder="Enter Quantity" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">OK</button>
+                    <button class="btn btn-secondary" type="reset" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/js/Counter.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn-add").on("click", (event) => {
+            event.preventDefault();
+            $("#quantity").val("")
+            $("#addModal").modal({
+                show: true
+            });
+        });
+    });
+</script>

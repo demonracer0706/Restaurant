@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model Restaurant.Models.AdminModel
+<div class="container-fluid">
+    <!-- Statistical by menu item-->
+    <form id="frm">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <div class="row">
+                    <div class="w-75">
+                        <h6 class="m-0 font-weight-bold text-primary">Dash Board</h6>
+                    </div>
+                    <div class="w-25">
+                        <div id="reportrange"
+                             style="position: relative;
+                                    background: #fff;
+                                    cursor: pointer;
+                                    padding: 5px 10px;
+                                    border: 1px solid #ccc;
+                                    width: 100%">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <span></span>
+                            <i class="fa fa-caret-down"
+                               style="position: absolute;
+                                      right: 5%;
+                                      top: 50%;
+                                      transform: translateY(-50%);">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <input id="startDate" hidden />
+                <input id="endDate" hidden />
+                <table class="table table-bordered" cellspacing="0" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </form>
+
+    <!-- Bar Chart -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Monthly Result</h6>
+        </div>
+        @{
+            if (Model.RevenueList != null && Model.RevenueList.Count > 0)
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    var id = "item" + i;
+                    <input id="@id" type="hidden" value="@Model.RevenueList[i]">
+                }
+            }
+        }
+        <div class="card-body">
+            <div class="chart-bar">
+                <canvas id="myBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/js/chart.js/Chart.min.js"></script>
+<script type="text/javascript" src="~/Content/js/chart-bar-demo.js"></script>
+
+<!-- Page level plugins -->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="~/Content/js/Admin/indexPage.js"></script>

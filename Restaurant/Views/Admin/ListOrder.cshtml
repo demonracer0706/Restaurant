@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "ListOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model Restaurant.Models.AdminModel
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Order Table List</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Table Name</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model.BookTableList != null && Model.BookTableList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.BookTableList.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Model.BookTableList[i].ID</td>
+                                        <td>@Model.BookTableList[i].FullName</td>
+                                        <td>@Model.BookTableList[i].Email</td>
+                                        <td>@Model.BookTableList[i].Number</td>
+                                        <td>@Model.BookTableList[i].Date</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Page level plugins -->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<!-- Page level custom scripts -->
+<script type="text/javascript" src="~/Content/js/datatables-demo.js"></script>

@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@model Restaurant.Models.UserModel
+<div class="container-fluid">
+    @{
+        if (Model.TableList != null && Model.TableList.Count > 0)
+        {
+            <div class="row" id="tableContainer">
+                @foreach (var item in Model.TableList)
+                {
+                    var background = "#fff";
+                    var color = "#858796";
+                    var itemId = "table" + item.Number;
+                    var statusId = "status" + item.Number;
+                    if (item.Status)
+                    {
+                        background = "#2383a8";
+                        color = "#fff";
+                        <input type="hidden" id="@statusId" value="true" />
+                    }
+                    <a href="/User/Detail?tableId=@item.Number" class="col-3 card m-4 tableId" style="height: 120px; background: @background;"
+                       id="@itemId">
+
+                        <span class="d-flex w-100 h-100 align-items-end justify-content-center"
+                              style="color: @color; cursor: pointer;">
+                            @item.TableName
+                        </span>
+                    </a>
+                }
+            </div>
+        }
+    }
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/Content/js/User/itemManagement.js"></script>
